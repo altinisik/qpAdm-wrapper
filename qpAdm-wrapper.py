@@ -84,7 +84,7 @@ def eval_z(row):
 def eval_p(row):
     if (row['p_value'] < 0.01):
         return 'p-value/not feasible'
-    elif (row['p_value'] > 0.01) & (row['z_eval'] == "fail"):
+    elif (row['p_value'] >= 0.01) & (row['z_eval'] == "fail"):
         return 'propotions/Z<2'
     elif (row['p_value'] > 0.01) & (row['z_eval'] == "pass"):
         return 'feasible'
@@ -244,9 +244,9 @@ if __name__ == "__main__":
                             submodels.append(bestpat[0])
                             submodels_pvalues.append(round(float(bestpat[1]),3))
                             nested_pvalues.append(round(float(bestpat[-1]),3))
-                    results.at[l, 'submodels'] = ','.join(submodels)
-                    results.at[l, 'submodels_pvalues'] = ','.join(map(str, submodels_pvalues))
-                    results.at[l, 'nested_pvalues'] = ','.join(map(str, nested_pvalues))
+                    results.at[l, 'submodels'] = ':'.join(submodels)
+                    results.at[l, 'submodels_pvalues'] = ':'.join(map(str, submodels_pvalues))
+                    results.at[l, 'nested_pvalues'] = ':'.join(map(str, nested_pvalues))
                     nested_feasible = 'YES' if any(filter(lambda x: x > 0.05, nested_pvalues)) else 'NO'
                     results.at[l, 'nested_feasible'] = nested_feasible
         results['z_pop1'] = results['pop1_mixture'] / results['s.e_1']
